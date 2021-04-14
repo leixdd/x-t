@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Faker\Factory;
-
+use DB;
+use Hash;
 class UsersSeeder extends Seeder
 {
     /**
