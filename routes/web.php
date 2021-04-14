@@ -19,14 +19,8 @@ Route::get('/', function () {
 
 //Auth::routes();
 
-Auth::routes(
+Auth::routes([
+    'register' => false
+]);
 
-    ['register' => false]
-);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('{any}', function () {
-    return view('app');
-})->where('any','.*');
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
