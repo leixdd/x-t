@@ -1,4 +1,5 @@
 <template>
+    <v-app>
     <div class="login-page flex-container">
         <div class="overlay"></div>
         <v-container>
@@ -12,15 +13,24 @@
                       <h3>Aerolink Messenger</h3>
                     </center>
                     <v-row>
-                        <v-col sm="12" md="12" lg="12">
-                            <form>
+                        <v-col cols="12" sm="12" md="12" lg="12">
+                            <form> 
                                 <v-text-field
                                     v-model="username"
+                                    label="Username"
                                 ></v-text-field>
                                 <v-text-field
                                     v-model="password"
+                                    label="Password"
                                 ></v-text-field><br>
-                                <v-btn @click="submit" color="success" block depressed>Login</v-btn>
+                                <v-btn
+                                    color="success"
+                                    class="mr-4"
+                                    block
+                                    depressed
+                                    >
+                                    Submit
+                                </v-btn>
                             </form>
                         </v-col>
                     </v-row>
@@ -28,6 +38,7 @@
             </v-card>
         </v-container>
     </div>
+    </v-app>
 </template>
 
 <script>
@@ -38,6 +49,11 @@
             username: "",
             password: ""
         }),
+        methods: {
+            submit(){
+
+            }
+        }
     }
 
 </script>

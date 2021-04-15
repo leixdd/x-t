@@ -10942,4 +10942,56 @@ a.text-dark:focus {
   }
 }
 
+html {
+  overflow: hidden;
+}
+
+/*Login */
+
+.login-page {
+  height: 100vh;
+  overflow: hidden !important;
+  background-image: url("/images/Human-Resources.jpg");
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  overflow: hidden !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.login-page img {
+  width: 70px;
+  height: 70px;
+  float: center;
+}
+
+.overlay {
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+  background: #11998e;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  position: absolute;
+  opacity: 0.8;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 40%;
+  z-index: 5;
+}
+
+/* end of login */
+
 

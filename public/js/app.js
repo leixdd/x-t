@@ -1877,6 +1877,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   title: 'Aerolink | Login',
   data: function data() {
@@ -1884,6 +1895,9 @@ __webpack_require__.r(__webpack_exports__);
       username: "",
       password: ""
     };
+  },
+  methods: {
+    submit: function submit() {}
   }
 });
 
@@ -37747,87 +37761,101 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "login-page flex-container" },
-    [
-      _c("div", { staticClass: "overlay" }),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        [
-          _c(
-            "v-card",
-            { staticClass: "mx-auto login-box", attrs: { outlined: "" } },
-            [
-              _c(
-                "v-container",
-                [
-                  _c("center", [
-                    _c("img", { attrs: { src: "/images/aerolink.png" } }),
+  return _c("v-app", [
+    _c(
+      "div",
+      { staticClass: "login-page flex-container" },
+      [
+        _c("div", { staticClass: "overlay" }),
+        _vm._v(" "),
+        _c(
+          "v-container",
+          [
+            _c(
+              "v-card",
+              { staticClass: "mx-auto login-box", attrs: { outlined: "" } },
+              [
+                _c(
+                  "v-container",
+                  [
+                    _c("center", [
+                      _c("img", { attrs: { src: "/images/aerolink.png" } }),
+                      _vm._v(" "),
+                      _c("h3", [_vm._v("Aerolink Messenger")])
+                    ]),
                     _vm._v(" "),
-                    _c("h3", [_vm._v("Aerolink Messenger")])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-row",
-                    [
-                      _c("v-col", { attrs: { sm: "12", md: "12", lg: "12" } }, [
+                    _c(
+                      "v-row",
+                      [
                         _c(
-                          "form",
+                          "v-col",
+                          {
+                            attrs: { cols: "12", sm: "12", md: "12", lg: "12" }
+                          },
                           [
-                            _c("v-text-field", {
-                              model: {
-                                value: _vm.username,
-                                callback: function($$v) {
-                                  _vm.username = $$v
-                                },
-                                expression: "username"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("v-text-field", {
-                              model: {
-                                value: _vm.password,
-                                callback: function($$v) {
-                                  _vm.password = $$v
-                                },
-                                expression: "password"
-                              }
-                            }),
-                            _c("br"),
-                            _vm._v(" "),
                             _c(
-                              "v-btn",
-                              {
-                                attrs: {
-                                  color: "success",
-                                  block: "",
-                                  depressed: ""
-                                },
-                                on: { click: _vm.submit }
-                              },
-                              [_vm._v("Login")]
+                              "form",
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Username" },
+                                  model: {
+                                    value: _vm.username,
+                                    callback: function($$v) {
+                                      _vm.username = $$v
+                                    },
+                                    expression: "username"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("v-text-field", {
+                                  attrs: { label: "Password" },
+                                  model: {
+                                    value: _vm.password,
+                                    callback: function($$v) {
+                                      _vm.password = $$v
+                                    },
+                                    expression: "password"
+                                  }
+                                }),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "v-btn",
+                                  {
+                                    staticClass: "mr-4",
+                                    attrs: {
+                                      color: "success",
+                                      block: "",
+                                      depressed: ""
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Submit\n                            "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
                             )
-                          ],
-                          1
+                          ]
                         )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
