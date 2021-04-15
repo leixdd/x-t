@@ -63,7 +63,7 @@
                     console.log(response.errors);
                 })
                 .catch((error) => {
-                      this.response = error.response.data.errors;
+                      console.log(error.response.data.errors);
                 });
             }
         }

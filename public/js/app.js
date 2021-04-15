@@ -1902,15 +1902,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      var _this = this;
-
       axios.post('login', {
         username: this.username,
         password: this.password
       }).then(function (response) {
         console.log(response.errors);
       })["catch"](function (error) {
-        _this.response = error.response.data.errors;
+        console.log(error.response.data.errors);
       });
     }
   }
