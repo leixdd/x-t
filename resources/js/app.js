@@ -5,7 +5,9 @@
  */
 
 require('./bootstrap');
-require('./components')
+require('./components');
+require('axios');
+
 window.Vue = require('vue').default;
 
 import vuetify from './plugins/vuetify';

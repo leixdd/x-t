@@ -23,11 +23,14 @@
                                     v-model="password"
                                     label="Password"
                                 ></v-text-field><br>
+
+                                {{ response }}
                                 <v-btn
                                     color="success"
                                     class="mr-4"
                                     block
                                     depressed
+                                    @click="submit"
                                     >
                                     Submit
                                 </v-btn>
@@ -47,11 +50,21 @@
         title: 'Aerolink | Login',
         data: () => ({
             username: "",
-            password: ""
+            password: "",
+            response: "",
         }),
         methods: {
             submit(){
-
+                axios.post('login', {
+                    username: this.username,
+                    password: this.password
+                })
+                .then((response) => {
+                    console.log(response.errors);
+                })
+                .catch((error) => {
+                      this.response = error.response.data.errors;
+                });
             }
         }
     }
