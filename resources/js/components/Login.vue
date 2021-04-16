@@ -14,28 +14,33 @@
                     </center>
                     <v-row>
                         <v-col cols="12" sm="12" md="12" lg="12">
-                            <form> 
+                            <form @submit.prevent="login" @keydown="form.onKeydown($event)"> 
                                 <v-text-field
-                                    v-model="username"
+                                    v-model="form.username"
                                     label="Username"
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="password"
-                                    label="Password"
-                                ></v-text-field><br>
+                                    :class="{ 'is-invalid': form.errors.has('username') }"
+                                >
+                                </v-text-field>
 
-                                <v-alert type="error" v-if="response" dismissible>
-                                    <p v-html="response"> </p>
-                                </v-alert>
-                               
+                                <v-text-field
+                                    v-model="form.password"
+                                    label="Password"
+                                    :class="{ 'is-invalid': form.errors.has('password') }"
+                                ></v-text-field>
+                                    
+                                <has-error :form="form" field="username"></has-error>
+                                <has-error :form="form" field="password"></has-error>
+
+                                <br>
                                 <v-btn
                                     color="success"
                                     class="mr-4"
                                     block
                                     depressed
-                                    @click="submit"
+                                    :disabled="form.busy"
+                                    type="submit" 
                                     >
-                                    Submit
+                                    Login
                                 </v-btn>
                             </form>
                         </v-col>
@@ -48,29 +53,43 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { Form, HasError, AlertError } from 'vform'
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
 
     export default {
         title: 'Aerolink | Login',
         data: () => ({
-            username: "",
-            password: "",
-            response: "",
+            form: new Form({
+               username: "",
+               password: "",
+            })
         }),
         methods: {
-            submit(){
-                axios.post('login', {
-                    username: this.username,
-                    password: this.password
-                })
+            // submit(){
+            //     axios.post('login', {
+            //         username: this.username,
+            //         password: this.password
+            //     })
+            //     .then((response) => {
+            //         console.log(response.errors);
+            //     })
+            //     .catch((error) => {
+            //         //  console.log(error.response.data.errors);
+            //         this.response = "";
+            //         Object.keys(error.response.data.errors).map((key, index) =>{
+            //             this.response += String(error.response.data.errors[key]) + "<br>";
+            //         })
+            //     });
+            // }
+            login(){
+                this.form.post('login')
                 .then((response) => {
                     console.log(response.errors);
                 })
                 .catch((error) => {
-                    //  console.log(error.response.data.errors);
-                    this.response = "";
-                    Object.keys(error.response.data.errors).map((key, index) =>{
-                        this.response += String(error.response.data.errors[key]) + "<br>";
-                    })
                 });
             }
         }
