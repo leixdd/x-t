@@ -33,6 +33,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      {{ this.$store.getters.getUser}}
     </v-navigation-drawer>
 
     <v-app-bar app dense flat color="green accent-4" dark>

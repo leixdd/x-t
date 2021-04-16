@@ -5,15 +5,17 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-
+        user: {},    
     },
 
     getters: {
-
+        getUser: state => state.user,
     },
 
     mutations: {
-
+        setUser(state, data) {
+            state.user = data;
+        },
     },
 
     actions: {
