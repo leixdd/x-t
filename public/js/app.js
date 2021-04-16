@@ -1891,6 +1891,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   title: 'Aerolink | Login',
   data: function data() {
@@ -1902,13 +1905,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
+      var _this = this;
+
       axios.post('login', {
         username: this.username,
         password: this.password
       }).then(function (response) {
         console.log(response.errors);
       })["catch"](function (error) {
-        console.log(error.response.data.errors);
+        //  console.log(error.response.data.errors);
+        _this.response = "";
+        Object.keys(error.response.data.errors).map(function (key, index) {
+          _this.response += String(error.response.data.errors[key]) + "<br>";
+        });
       });
     }
   }
@@ -37833,11 +37842,26 @@ var render = function() {
                                   }
                                 }),
                                 _c("br"),
-                                _vm._v(
-                                  "\n\n                            " +
-                                    _vm._s(_vm.response) +
-                                    "\n                            "
-                                ),
+                                _vm._v(" "),
+                                _vm.response
+                                  ? _c(
+                                      "v-alert",
+                                      {
+                                        attrs: {
+                                          type: "error",
+                                          dismissible: ""
+                                        }
+                                      },
+                                      [
+                                        _c("p", {
+                                          domProps: {
+                                            innerHTML: _vm._s(_vm.response)
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
                                 _c(
                                   "v-btn",
                                   {

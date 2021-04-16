@@ -24,7 +24,10 @@
                                     label="Password"
                                 ></v-text-field><br>
 
-                                {{ response }}
+                                <v-alert type="error" v-if="response" dismissible>
+                                    <p v-html="response"> </p>
+                                </v-alert>
+                               
                                 <v-btn
                                     color="success"
                                     class="mr-4"
@@ -63,7 +66,11 @@
                     console.log(response.errors);
                 })
                 .catch((error) => {
-                      console.log(error.response.data.errors);
+                    //  console.log(error.response.data.errors);
+                    this.response = "";
+                    Object.keys(error.response.data.errors).map((key, index) =>{
+                        this.response += String(error.response.data.errors[key]) + "<br>";
+                    })
                 });
             }
         }
