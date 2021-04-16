@@ -5,12 +5,13 @@
  */
 
 require('./bootstrap');
-require('./components');
 require('axios');
 
 window.Vue = require('vue').default;
 
 import vuetify from './plugins/vuetify';
+import router from './routes'
+import components from './components'
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -30,6 +31,9 @@ import vuetify from './plugins/vuetify';
  */
 
 const app = new Vue({
+    mode: 'history',
     el: '#app',
-    vuetify
+    vuetify,
+    router,
+    components
 });

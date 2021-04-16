@@ -87,7 +87,7 @@ Vue.component(AlertError.name, AlertError)
             login(){
                 this.form.post('login')
                 .then((response) => {
-                    console.log(response.errors);
+                   this.$router.push('/messages');
                 })
                 .catch((error) => {
                 });
