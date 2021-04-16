@@ -36,9 +36,19 @@
     </v-navigation-drawer>
 
     <v-app-bar app dense flat color="green accent-4" dark>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-app-bar>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
+        <v-spacer></v-spacer>
+
+        <v-btn
+            class="ma-2"
+            text
+            icon
+            @click="logout"
+        >
+            <v-icon>mdi-logout</v-icon>
+        </v-btn>
+    </v-app-bar>
 
     <v-main>
  
@@ -58,5 +68,15 @@
         ['mdi-alert-octagon', 'Spam'],
       ],
     }),
+    methods: {
+        logout(){
+            axios.post('logout')
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+            });
+        }
+    }
   }
 </script>
