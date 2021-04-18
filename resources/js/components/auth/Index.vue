@@ -69,7 +69,15 @@
         ['mdi-alert-octagon', 'Spam'],
       ],
     }),
+    mounted() {
+      this.user();
+    },
     methods: {
+        user(){
+          axios.get('api/user').then(user  => {
+            console.log(user);
+          })
+        },
         logout(){
             axios.post('logout')
             .then((response) => {

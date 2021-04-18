@@ -85,11 +85,23 @@ Vue.component(AlertError.name, AlertError)
             //     });
             // }
             login(){
-                this.form.post('login')
+                this.form.post('api/login')
                 .then((response) => {
-             //       this.$store.commit("setUser", response.data);
-                    console.log(response);
-                    this.$router.push('/messages');
+                 this.$store.commit(
+                    "setAccessToken",
+                    `Bearer ${response.data.access_token}`
+                  );
+
+                  localStorage.setItem(
+                    "token_",
+                    `Bearer ${response.data.access_token}`
+                  );
+
+                  axios.defaults.headers.common[
+                    "Authorization"
+                  ] = localStorage.getItem("token_");
+
+                  this.$router.push({ path: '/messages' });
                 })
                 .catch((error) => {
                 });
