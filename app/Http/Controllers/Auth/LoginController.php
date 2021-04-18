@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Validator;
-use App\User;
+use App\Models\User;
 use DB;
 use Auth;
 use Illuminate\Http\Request;
