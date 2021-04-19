@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<auth-index></auth-index>
+<app-template></app-template> 
 @endsection
