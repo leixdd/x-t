@@ -70,7 +70,7 @@
       ],
     }),
     mounted() {
-      this.user();
+    //  this.user();
     },
     methods: {
         user(){

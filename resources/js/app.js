@@ -32,7 +32,6 @@ import store from './store'
  */
 
 const app = new Vue({
-    mode: 'history',
     el: '#app',
     vuetify,
     router,

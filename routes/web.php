@@ -13,15 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', [App\Http\Controllers\WebController::class, 'main']);
 
-//Auth::routes();
-
-Auth::routes([
-    'register' => false
-]);
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('{path}', [App\Http\Controllers\HomeController::class, 'index'])->where('path', '^(?!api\/)[\/\w\.-]*');
+Route::get('{path}', [App\Http\Controllers\WebController::class, 'index'])->where('path', '^(?!api\/)[\/\w\.-]*');
