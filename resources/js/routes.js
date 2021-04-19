@@ -1,7 +1,7 @@
 window.Vue = require('vue').default;
 
 import VueRouter from 'vue-router'
-
+import store from './store';
 Vue.use(VueRouter)
 
 let routes = [
@@ -47,6 +47,7 @@ router.beforeEach((to, from, next) => {
         //if token exists, store it in vuex
         //TODO: add vuex here setting the token 
         isLoggedIn = true;
+        
     } 
 
 

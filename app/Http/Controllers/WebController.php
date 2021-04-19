@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 class WebController extends Controller
 {
     public function main() {
@@ -20,5 +20,9 @@ class WebController extends Controller
         }
 
         return redirect('/');
+    }
+
+    public function UserData(Request $request){
+        return $request->user();
     }
 }
