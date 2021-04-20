@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:api'], function () {
   Route::get('/user-data', [App\Http\Controllers\WebController::class, 'UserData']);
+  Route::get('/online-users', [App\Http\Controllers\api\IndexController::class, 'getOnlineUsers']);
+  Route::get('/offline-users', [App\Http\Controllers\api\IndexController::class, 'getOfflineUsers']);
 });
 
 

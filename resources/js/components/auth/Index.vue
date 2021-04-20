@@ -17,16 +17,47 @@
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item
-          v-for="n in 5"
-          :key="n"
-          link
-          dark
-        >
-          <v-list-item-content>
-            <v-list-item-title>Item {{ n }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <v-list-item-content class="aerolink-background-color white--text pl-4">
+          <v-list-item-title >Online</v-list-item-title>
+        </v-list-item-content>
+        <template v-if="online_users.length > 0">
+          <v-list-item
+            v-for="user in online_users"
+            :key="user.id"
+            link
+            dark
+          >
+            <v-list-item-content>
+              <v-list-item-title><v-icon style="font-size:8px" color="green">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <template v-else>
+            <v-list-item-content>
+              <v-list-item-title class="pl-4 white--text">No Users Online</v-list-item-title>
+            </v-list-item-content>
+        </template>
+
+        <v-list-item-content class="aerolink-background-color white--text pl-4">
+          <v-list-item-title >Offline</v-list-item-title>
+        </v-list-item-content>
+        <template v-if="offline_users.length > 0">
+          <v-list-item
+            v-for="user in offline_users"
+            :key="user.id"
+            link
+            dark
+          >
+            <v-list-item-content>
+              <v-list-item-title><v-icon style="font-size:8px" color="#78909C">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <template v-else>
+            <v-list-item-content>
+              <v-list-item-title class="pl-4 white--text">No Users Offline</v-list-item-title>
+            </v-list-item-content>
+        </template>
       </v-list>
     </v-navigation-drawer>
 
@@ -63,8 +94,17 @@
         ['mdi-alert-octagon', 'Spam'],
       ],
     }),
+    computed: {
+      online_users() {
+        return this.$store.getters.getOnlineUsers;
+      },
+      offline_users() {
+        return this.$store.getters.getOfflineUsers;
+      },
+    },
     mounted() {
-
+      this.$store.dispatch('fetchOnlineUsers');
+      this.$store.dispatch('fetchOfflineUsers');
     },
     methods: {
         logout(){

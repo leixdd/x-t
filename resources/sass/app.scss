@@ -5,7 +5,7 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+//@import '~bootstrap/scss/bootstrap';
 
 html { overflow: hidden }
 
@@ -55,3 +55,7 @@ html { overflow: hidden }
 }
 
 /* end of login */
+
+.aerolink-background-color {
+    background-color: #00C853;
+}
