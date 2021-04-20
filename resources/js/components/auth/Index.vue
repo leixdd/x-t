@@ -5,19 +5,14 @@
       app
       color="blue-grey darken-3"
     >
-      <v-sheet
-        color="blue-grey darken-3"
-        class="pa-4"
-        dark
-      >
-        <v-avatar
-          class="mb-4"
-          color="grey darken-1"
-          size="64"
-        ></v-avatar>
 
-        <div>john@vuetifyjs.com</div>
-      </v-sheet>
+       <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-title class="white--text">{{ this.$store.getters.getUser.fullname }}</v-list-item-title>
+      </v-list-item>
 
       <v-divider></v-divider>
 
@@ -33,7 +28,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      {{ this.$store.getters.getUser}}
     </v-navigation-drawer>
 
     <v-app-bar app dense flat color="green accent-4" dark>
