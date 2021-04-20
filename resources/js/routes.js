@@ -28,6 +28,14 @@ let routes = [
         }
     },
 
+    {
+        path:  '/message/:username',
+        component: require('./components/auth/Index.vue').default,
+        meta: {
+            needsAuth: true
+        }
+    },
+
 ];
 
 const router = new VueRouter({
@@ -46,6 +54,13 @@ router.beforeEach((to, from, next) => {
     if(localStorage.getItem('token_')) {
         //if token exists, store it in vuex
         //TODO: add vuex here setting the token 
+        axios.get('/api/user-data').catch(err => {
+            next('/') //401 
+        }).then(response => {
+            
+        store.commit("setUser", response.data);
+          next();
+        });
         isLoggedIn = true;
         
     } 
