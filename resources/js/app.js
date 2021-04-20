@@ -13,6 +13,9 @@ import vuetify from './plugins/vuetify';
 import router from './routes'
 import components from './components'
 import store from './store'
+import { EmojiPickerPlugin } from 'vue-emoji-picker'
+
+Vue.use(EmojiPickerPlugin)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
