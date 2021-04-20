@@ -77,7 +77,7 @@
     </v-app-bar>
 
     <v-main>
- 
+      <chat></chat>
     </v-main>
   </v-app>
 </template>
