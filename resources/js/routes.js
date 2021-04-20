@@ -28,6 +28,14 @@ let routes = [
         }
     },
 
+    {
+        path:  '/message/:username',
+        component: require('./components/auth/Index.vue').default,
+        meta: {
+            needsAuth: true
+        }
+    },
+
 ];
 
 const router = new VueRouter({

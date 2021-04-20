@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -47,6 +47,7 @@
             :key="user.id"
             link
             dark
+            :to="`/message/${user.username}`"
           >
             <v-list-item-content>
               <v-list-item-title><v-icon style="font-size:8px" color="#78909C">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>

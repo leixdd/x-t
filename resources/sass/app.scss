@@ -133,3 +133,43 @@ html { overflow: hidden }
     }
   }
   
+/* conversations */
+#messages {
+  height: 78vh;
+  overflow-y: scroll;
+  padding:0!important;
+  margin:0!important;
+  background-color: #f2f2f2;
+  
+}
+
+.message {
+  max-width: 50%;
+  border-radius: 5px;
+}
+.message-out {
+    margin-left: 67%;
+}
+
+.message-body{
+    padding:0!important;
+}
+
+.date-message-out{
+  position: absolute;
+  font-size: 11px;
+  right: 1rem;
+  top: -1rem;
+  color: #4d4d4d;
+  line-height:1;
+}
+.date-message-in{
+  position: absolute;
+  font-size: 11px;
+  left: 1rem;
+  top: -1rem;
+  color: #4d4d4d;
+  line-height:1;
+}
+
+//end
