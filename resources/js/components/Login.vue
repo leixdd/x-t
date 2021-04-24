@@ -101,7 +101,10 @@ Vue.component(AlertError.name, AlertError)
                     "Authorization"
                   ] = localStorage.getItem("token_");
 
-                 this.$router.push({ path: '/messages' }); 
+                if(!response.data.error){
+                    this.$router.push({ path: '/messages' }); 
+                }
+              //   
                  // window.location.href = '/messages';
                 })
                 .catch((error) => {

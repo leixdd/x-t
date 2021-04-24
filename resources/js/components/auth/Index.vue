@@ -1,121 +1,115 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      color="blue-grey darken-3"
-    >
+    <v-app>
+    <div class="login-page flex-container">
+        <div class="overlay"></div>
+        <v-container>
+            <v-card
+                class="mx-auto login-box"
+                outlined
+            >
+                <v-container>
+                    <center>
+                      <img src="/images/aerolink.png">
+                      <h3>Aerolink Messenger</h3>
+                    </center>
+                    <v-row>
+                        <v-col cols="12" sm="12" md="12" lg="12">
+                            <form @submit.prevent="login" @keydown="form.onKeydown($event)"> 
+                                <v-text-field
+                                    v-model="form.username"
+                                    label="Username"
+                                    :class="{ 'is-invalid': form.errors.has('username') }"
+                                >
+                                </v-text-field>
 
-       <v-list-item class="px-2">
-        <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
-        </v-list-item-avatar>
+                                <v-text-field
+                                    v-model="form.password"
+                                    label="Password"
+                                    :class="{ 'is-invalid': form.errors.has('password') }"
+                                ></v-text-field>
+                                    
+                                <has-error :form="form" field="username" class="red--text"></has-error>
+                                <has-error :form="form" field="password" class="red--text"></has-error>
+                                <has-error :form="form" field="credentials-failed" class="red--text"></has-error>
 
-        <v-list-item-title class="white--text">{{ this.$store.getters.getUser.fullname }}</v-list-item-title>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list>
-        <v-list-item-content class="aerolink-background-color white--text pl-4">
-          <v-list-item-title >Online</v-list-item-title>
-        </v-list-item-content>
-        <template v-if="online_users.length > 0">
-          <v-list-item
-            v-for="user in online_users"
-            :key="user.id"
-            link
-            dark
-          >
-            <v-list-item-content>
-              <v-list-item-title><v-icon style="font-size:8px" color="green">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-        <template v-else>
-            <v-list-item-content>
-              <v-list-item-title class="pl-4 white--text">No Users Online</v-list-item-title>
-            </v-list-item-content>
-        </template>
-
-        <v-list-item-content class="aerolink-background-color white--text pl-4">
-          <v-list-item-title >Offline</v-list-item-title>
-        </v-list-item-content>
-        <template v-if="offline_users.length > 0">
-          <v-list-item
-            v-for="user in offline_users"
-            :key="user.id"
-            link
-            dark
-            :to="`/message/${user.username}`"
-          >
-            <v-list-item-content>
-              <v-list-item-title><v-icon style="font-size:8px" color="#78909C">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-        <template v-else>
-            <v-list-item-content>
-              <v-list-item-title class="pl-4 white--text">No Users Offline</v-list-item-title>
-            </v-list-item-content>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar app dense flat color="green accent-4" dark>
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-        <v-spacer></v-spacer>
-
-        <v-btn
-            class="ma-2"
-            text
-            icon
-            @click="logout"
-        >
-            <v-icon>mdi-logout</v-icon>
-        </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <chat></chat>
-    </v-main>
-  </v-app>
+                                <br>
+                                <v-btn
+                                    color="success"
+                                    class="mr-4"
+                                    block
+                                    depressed
+                                    :disabled="form.busy"
+                                    type="submit" 
+                                    >
+                                    Login
+                                </v-btn>
+                            </form>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>
+        </v-container>
+    </div>
+    </v-app>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      cards: ['Today', 'Yesterday'],
-      drawer: null,
-      links: [
-        ['mdi-inbox-arrow-down', 'Inbox'],
-        ['mdi-send', 'Send'],
-        ['mdi-delete', 'Trash'],
-        ['mdi-alert-octagon', 'Spam'],
-      ],
-    }),
-    computed: {
-      online_users() {
-        return this.$store.getters.getOnlineUsers;
-      },
-      offline_users() {
-        return this.$store.getters.getOfflineUsers;
-      },
-    },
-    mounted() {
-      this.$store.dispatch('fetchOnlineUsers');
-      this.$store.dispatch('fetchOfflineUsers');
-    },
-    methods: {
-        logout(){
-            axios.post('logout')
-            .then((response) => {
-                console.log(response);
+import Vue from 'vue'
+import { Form, HasError, AlertError } from 'vform'
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+    export default {
+        title: 'Aerolink | Login',
+        data: () => ({
+            form: new Form({
+               username: "",
+               password: "",
             })
-            .catch((error) => {
-            });
+        }),
+        methods: {
+            // submit(){
+            //     axios.post('login', {
+            //         username: this.username,
+            //         password: this.password
+            //     })
+            //     .then((response) => {
+            //         console.log(response.errors);
+            //     })
+            //     .catch((error) => {
+            //         //  console.log(error.response.data.errors);
+            //         this.response = "";
+            //         Object.keys(error.response.data.errors).map((key, index) =>{
+            //             this.response += String(error.response.data.errors[key]) + "<br>";
+            //         })
+            //     });
+            // }
+            login(){
+                this.form.post('api/login')
+                .then((response) => {
+                 this.$store.commit(
+                    "setAccessToken",
+                    `Bearer ${response.data.access_token}`
+                  );
+
+                  localStorage.setItem(
+                    "token_",
+                    `Bearer ${response.data.access_token}`
+                  );
+
+                  axios.defaults.headers.common[
+                    "Authorization"
+                  ] = localStorage.getItem("token_");
+
+                 this.$router.push({ path: '/messages' }); 
+                // window.location.href = '/messages';
+                })
+                .catch((error) => {
+                    this.form.errors.set('credentials-failed', 'Wrong login credential')
+                });
+            }
         }
     }
-  }
+
 </script>

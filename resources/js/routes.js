@@ -30,7 +30,7 @@ let routes = [
 
     {
         path:  '/message/:username',
-        component: require('./components/auth/Index.vue').default,
+        component: require('./components/auth/ChatSection.vue').default,
         meta: {
             needsAuth: true
         }
