@@ -8,14 +8,16 @@ const store = new Vuex.Store({
         user: {},    
         token: "",
         online_users: [],
-        offline_users: []
+        offline_users: [],
+        chat_user: "",
     },
 
     getters: {
         getUser: state => state.user,
         getAccessToken: state => state.user,
         getOnlineUsers: state => state.online_users,
-        getOfflineUsers: state => state.offline_users
+        getOfflineUsers: state => state.offline_users,
+        getChatUser: state => state.chat_user
     },
 
     mutations: {
@@ -30,6 +32,9 @@ const store = new Vuex.Store({
         },
         setOfflineUsers(state, data) {
             state.offline_users = data
+        },
+        setChatUser(state, data) {
+            state.chat_user = data
         }
     },
 
@@ -45,6 +50,14 @@ const store = new Vuex.Store({
         fetchOfflineUsers({ commit }){
             return axios.get('/api/offline-users').then(res  => {
                commit("setOfflineUsers",res.data)
+            }).catch(err => {
+                console.log(err);
+            })
+            
+        },
+        async fetchUser({commit}, username){
+            return await axios.get('/api/user/' + username).then(res  => {
+               commit("setChatUser",res.data)
             }).catch(err => {
                 console.log(err);
             })

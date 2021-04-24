@@ -19,4 +19,8 @@ class IndexController extends Controller
     public function getOfflineUsers(){
         return User::where('is_online', 0)->get();
     }
+
+    public function getUser($username){
+        return User::where('username', $username)->get();
+    }
 }

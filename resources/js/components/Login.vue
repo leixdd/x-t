@@ -28,8 +28,9 @@
                                     :class="{ 'is-invalid': form.errors.has('password') }"
                                 ></v-text-field>
                                     
-                                <has-error :form="form" field="username"></has-error>
-                                <has-error :form="form" field="password"></has-error>
+                                <has-error :form="form" field="username" class="red--text"></has-error>
+                                <has-error :form="form" field="password" class="red--text"></has-error>
+                                <has-error :form="form" field="credentials-failed" class="red--text"></has-error>
 
                                 <br>
                                 <v-btn
@@ -102,9 +103,10 @@ Vue.component(AlertError.name, AlertError)
                   ] = localStorage.getItem("token_");
 
                  this.$router.push({ path: '/messages' }); 
-                 // window.location.href = '/messages';
+                // window.location.href = '/messages';
                 })
                 .catch((error) => {
+                    this.form.errors.set('credentials-failed', 'Wrong login credential')
                 });
             }
         }

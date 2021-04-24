@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if(!Auth::attempt($user_data))
         {
-            return response(['error' => true, 'data' => 'Incorrect Username or Password']);
+            return response()->json(['error' => true, 'data' => 'Incorrect Username or Password'], 422);
         }
 
         $accessToken = $request->user()->createToken('authToken');

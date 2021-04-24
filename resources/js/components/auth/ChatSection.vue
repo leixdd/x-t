@@ -1,9 +1,10 @@
 <template>
     <v-app>
+        <sidebar></sidebar>
         <v-card outlined>
           <v-card-title>
               <v-icon :color="online_indicator">mdi-circle-medium</v-icon>
-              User name
+              User name {{ chat_user }}
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="message-body">
@@ -101,9 +102,13 @@
     }),
 
     computed: {
-   
+      chat_user() {
+        return this.$store.getters.getChatUser;
+      },
     },
-
+    mounted(){
+      this.$store.dispatch('fetchUser', window.location.href.split('/').pop());
+    },
     methods: {
       insert(emoji) {
         this.message += emoji
@@ -114,7 +119,6 @@
       clearMessage () {
         this.message = ''
       },
-
     },
   }
 </script>
