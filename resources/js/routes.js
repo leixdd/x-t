@@ -50,17 +50,11 @@ const reset_token =  () => {
 router.beforeEach((to, from, next) => {
 
     let isLoggedIn = false;
+    store.commit("setUser", false);
 
     if(localStorage.getItem('token_')) {
         //if token exists, store it in vuex
         //TODO: add vuex here setting the token 
-        axios.get('/api/user-data').catch(err => {
-            next('/') //401 
-        }).then(response => {
-            
-        store.commit("setUser", response.data);
-          next();
-        });
         isLoggedIn = true;
         
     } 
@@ -71,6 +65,7 @@ router.beforeEach((to, from, next) => {
 
         if(!isLoggedIn) {
             reset_token();
+            store.commit("setUser", false);
             next({
                 path: 'login' //could be '/'
             })
@@ -79,17 +74,37 @@ router.beforeEach((to, from, next) => {
             //You could execute an axios call here to re validate the user with the token attatched to its authorization header.
             //for now i will not re validate. 
             //revalidation prevents tampering of token
+            axios.get('/api/user-data').catch(err => {
+                reset_token();
+                store.commit("setUser", false);
+                next({
+                    path: 'login' //could be '/'
+                })
+            }).then(response => {
+                store.commit("setUser", response.data);
+            });
             next();
         }
     } else {
         //if the route doesn't need auth, but the user was logged in we will bring the user to default auth page.
 
         if(isLoggedIn) {
+            
+            axios.get('/api/user-data').catch(err => {
+                reset_token();
+                store.commit("setUser", false);
+                next({
+                    path: 'login' //could be '/'
+                })
+            }).then(response => {
+                store.commit("setUser", response.data);
+            });
             next({
                 path: 'messages' //could be '/'
             })
         }else {
             reset_token();
+            store.commit("setUser", false);
             next(); // if the user was not logged, just let them to browse the routes that doesn't need auth
         }
     }

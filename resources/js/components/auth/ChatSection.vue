@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <sidebar></sidebar>
         <v-card outlined>
           <v-card-title>
               <v-icon :color="online_indicator">mdi-circle-medium</v-icon>
