@@ -4,7 +4,7 @@
         <v-card outlined>
           <v-card-title>
               <v-icon :color="online_indicator">mdi-circle-medium</v-icon>
-              User name {{ chat_user }}
+             {{ chat_user.fullname }}
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="message-body">
@@ -85,6 +85,10 @@
 </template>
 <script>
   export default {
+    props: {
+      chat_user: "",
+      online_indicator: ""
+    },
     data: () => ({
       message: 'Test',
       search: '',
@@ -102,12 +106,10 @@
     }),
 
     computed: {
-      chat_user() {
-        return this.$store.getters.getChatUser;
-      },
+     
     },
     mounted(){
-      this.$store.dispatch('fetchUser', window.location.href.split('/').pop());
+      
     },
     methods: {
       insert(emoji) {

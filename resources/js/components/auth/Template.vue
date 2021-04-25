@@ -50,7 +50,7 @@
             :to="`/message/${user.username}`"
           >
             <v-list-item-content>
-              <v-list-item-title><v-icon style="font-size:8px" color="#78909C">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
+              <v-list-item-title><v-icon color="blue-grey darken-1">mdi-circle-medium</v-icon> {{ user.fullname }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -78,7 +78,7 @@
     </v-app-bar>
 
     <v-main>
-        <router-view></router-view>
+        <router-view :online_indicator="online_indicator" :chat_user="getChatUser"></router-view>
     </v-main>
   </v-app>
 </template>
@@ -95,6 +95,8 @@
         ['mdi-delete', 'Trash'],
         ['mdi-alert-octagon', 'Spam'],
       ],
+      online_indicator: "blue-grey darken-1",
+      getChatUser:""
     }),
     computed: {
       online_users() {
@@ -107,13 +109,21 @@
       isUserLoggedIn() {
           return this.$store.getters.getUser;
       },
+
+      chat_user() {
+        return this.$store.getters.getChatUser;
+      },
     },
     watch: {
         isUserLoggedIn : function (v) {
-            if(v) {
-                this.$store.dispatch('fetchOnlineUsers');
-                this.$store.dispatch('fetchOfflineUsers');
-            }
+          if(v) {
+            this.$store.dispatch('fetchOnlineUsers');
+            this.$store.dispatch('fetchOfflineUsers');
+            this.$store.dispatch('fetchUser', window.location.href.split('/').pop());            
+          }
+        },
+        chat_user: function (data){
+          this.getChatUser = data;
         }
     },
     mounted() {
