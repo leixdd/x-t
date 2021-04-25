@@ -4,7 +4,7 @@
         <v-card outlined>
           <v-card-title>
               <v-icon :color="online_indicator">mdi-circle-medium</v-icon>
-             {{ chat_user.fullname }}
+             {{ chat_user.fullname }} {{ user_id}}
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text class="message-body">
@@ -83,15 +83,15 @@
         </v-footer>
     </v-app>
 </template>
-<script>
+<script>// @ts-nocheck
+
   export default {
-    props: {
-      chat_user: "",
-      online_indicator: ""
-    },
+    title: "Aerolink | Messenger | " + window.location.href.split("/").pop(),
+    props: ['chat_user', 'online_indicator'],
     data: () => ({
       message: 'Test',
       search: '',
+      user_id: number,
       messages: [
         {
           'key' : 1,
@@ -106,10 +106,26 @@
     }),
 
     computed: {
-     
-    },
-    mounted(){
       
+    },
+    created() {
+      // Echo.private('chat-sent-to-' + this.$store.getters.getUser.id).listen("ChatEvent", (e) => {
+      //   if(e.messages.sent_to === this.$store.getters.getUser.id) {
+      //     this.messages.push({
+      //       body: e.messages.message,
+      //       user: "",
+      //       created_at: e.messages.message_sent
+      //     });
+      //     //automatic scroll to down when someone sent you a message
+      //     document.getElementById('messages').scrollTop  = document.getElementById('messages').scrollHeight + 100;
+
+      //     //play sound when someone sent you a message
+      //     var audio = new Audio("http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3");
+      //     audio.play();
+      //   }
+      // });
+      console.log(this.user_id);
+     
     },
     methods: {
       insert(emoji) {
@@ -122,5 +138,10 @@
         this.message = ''
       },
     },
+    watch: { 
+      chat_user: function(newVal) { 
+       this.user_id  = newVal.id
+      }
+    }
   }
 </script>
