@@ -21,6 +21,6 @@ class IndexController extends Controller
     }
 
     public function getUser($username){
-        return User::where('username', $username)->get();
+        return User::where('username', $username)->first();
     }
 }
