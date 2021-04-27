@@ -83,7 +83,7 @@
         </v-footer>
     </v-app>
 </template>
-<script>// @ts-nocheck
+<script>
 
   export default {
     title: "Aerolink | Messenger | " + window.location.href.split("/").pop(),
@@ -91,7 +91,7 @@
     data: () => ({
       message: 'Test',
       search: '',
-      user_id: number,
+      user_id: "",
       messages: [
         {
           'key' : 1,
@@ -104,28 +104,7 @@
       
       ]
     }),
-
-    computed: {
-      
-    },
-    created() {
-      // Echo.private('chat-sent-to-' + this.$store.getters.getUser.id).listen("ChatEvent", (e) => {
-      //   if(e.messages.sent_to === this.$store.getters.getUser.id) {
-      //     this.messages.push({
-      //       body: e.messages.message,
-      //       user: "",
-      //       created_at: e.messages.message_sent
-      //     });
-      //     //automatic scroll to down when someone sent you a message
-      //     document.getElementById('messages').scrollTop  = document.getElementById('messages').scrollHeight + 100;
-
-      //     //play sound when someone sent you a message
-      //     var audio = new Audio("http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3");
-      //     audio.play();
-      //   }
-      // });
-      console.log(this.user_id);
-     
+    mounted() {
     },
     methods: {
       insert(emoji) {
@@ -137,10 +116,18 @@
       clearMessage () {
         this.message = ''
       },
+
+      initiateSockets(id) {
+       //disconnect first the last connection of echo
+       //new instance of connection
+       console.log(id);
+      } 
     },
     watch: { 
       chat_user: function(newVal) { 
-       this.user_id  = newVal.id
+       this.user_id  = newVal.id;
+       // @ts-ignore
+       this.initiateSockets(this.user_id);
       }
     }
   }
