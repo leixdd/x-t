@@ -1,22 +1,22 @@
 <template>
     <v-app>
-    <div class="login-page flex-container">
-        <div class="overlay"></div>
+    <div class="flex-container">
         <v-container>
             <v-card
-                class="mx-auto login-box"
+                class="mx-auto login-box mt-5"
                 outlined
             >
                 <v-container>
                     <center>
-                      <img src="/images/aerolink.png">
-                      <h3>Aerolink Messenger</h3>
+                      <img src="/images/login.svg" width="50%">
+                      <h3>Login</h3>
                     </center>
                     <v-row>
                         <v-col cols="12" sm="12" md="12" lg="12">
                             <form @submit.prevent="login" @keydown="form.onKeydown($event)"> 
                                 <v-text-field
                                     v-model="form.username"
+                                    color="success"
                                     label="Username"
                                     :class="{ 'is-invalid': form.errors.has('username') }"
                                 >
@@ -24,6 +24,8 @@
 
                                 <v-text-field
                                     v-model="form.password"
+                                    color="success"
+                                    type="password"
                                     label="Password"
                                     :class="{ 'is-invalid': form.errors.has('password') }"
                                 ></v-text-field>
@@ -61,7 +63,7 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
     export default {
-        title: 'Aerolink | Login',
+        title: 'Login',
         data: () => ({
             form: new Form({
                username: "",
@@ -69,22 +71,6 @@ Vue.component(AlertError.name, AlertError)
             })
         }),
         methods: {
-            // submit(){
-            //     axios.post('login', {
-            //         username: this.username,
-            //         password: this.password
-            //     })
-            //     .then((response) => {
-            //         console.log(response.errors);
-            //     })
-            //     .catch((error) => {
-            //         //  console.log(error.response.data.errors);
-            //         this.response = "";
-            //         Object.keys(error.response.data.errors).map((key, index) =>{
-            //             this.response += String(error.response.data.errors[key]) + "<br>";
-            //         })
-            //     });
-            // }
             login(){
                 this.form.post('api/login')
                 .then((response) => {
@@ -106,7 +92,7 @@ Vue.component(AlertError.name, AlertError)
                 // window.location.href = '/messages';
                 })
                 .catch((error) => {
-                    this.form.errors.set('credentials-failed', 'Wrong login credential')
+                    this.form.errors.set('credentials-failed', 'Wrong login credentials')
                 });
             }
         }

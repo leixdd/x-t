@@ -21,20 +21,40 @@ let routes = [
         }
     },
     {
-        path:  '/messages',
+        path:  '/home',
         component: require('./components/auth/Index.vue').default,
         meta: {
             needsAuth: true
         }
     },
-
     {
-        path:  '/message/:username',
-        component: require('./components/auth/ChatSection.vue').default,
+        path:  '/tasks',
+        component: require('./components/auth/Tasks.vue').default,
         meta: {
             needsAuth: true
         }
     },
+    {
+        path:  '/timeTrack',
+        component: require('./components/auth/TimeTrack.vue').default,
+        meta: {
+            needsAuth: true
+        }
+    },
+    {
+        path:  '/students',
+        component: require('./components/auth/UserStudent.vue').default,
+        meta: {
+            needsAuth: true
+        }
+    },
+    {
+        path:  '/admins',
+        component: require('./components/auth/UserAdmin.vue').default,
+        meta: {
+            needsAuth: true
+        }
+    }
 
 ];
 
@@ -100,7 +120,7 @@ router.beforeEach((to, from, next) => {
                 store.commit("setUser", response.data);
             });
             next({
-                path: 'messages' //could be '/'
+                path: 'home' //could be '/'
             })
         }else {
             reset_token();

@@ -8,7 +8,7 @@
 
        <v-list-item class="px-2">
         <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+          <v-img src="https://randomuser.me/api/portraits/lego/5.jpg"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-title class="white--text">{{ this.$store.getters.getUser.fullname }}</v-list-item-title>
@@ -18,46 +18,62 @@
 
       <v-list>
         <v-list-item-content class="aerolink-background-color white--text pl-4">
-          <v-list-item-title >Online</v-list-item-title>
+          <v-list-item-title >Navigation</v-list-item-title>
         </v-list-item-content>
-        <template v-if="online_users.length > 0">
+        <template>
+          
           <v-list-item
-            v-for="user in online_users"
-            :key="user.id"
             link
             dark
+            to="/tasks"
+            exact
+            exact-active-class="activeEx"
+            v-if="isUserLoggedIn.role === 1"
           >
             <v-list-item-content>
-              <v-list-item-title><v-icon style="font-size:8px" color="green">mdi-circle</v-icon> {{ user.fullname }}</v-list-item-title>
+              <v-list-item-title><v-icon color="#4CAF50">mdi-clipboard-list-outline</v-icon> <strong class="overline">Task Tracker </strong> </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </template>
-        <template v-else>
-            <v-list-item-content>
-              <v-list-item-title class="pl-4 white--text">No Users Online</v-list-item-title>
-            </v-list-item-content>
-        </template>
 
-        <v-list-item-content class="aerolink-background-color white--text pl-4">
-          <v-list-item-title >Offline</v-list-item-title>
-        </v-list-item-content>
-        <template v-if="offline_users.length > 0">
           <v-list-item
-            v-for="user in offline_users"
-            :key="user.id"
             link
             dark
-            :to="`/message/${user.username}`"
+            to="/timeTrack"
+            exact
+            exact-active-class="activeEx"
+            v-if="isUserLoggedIn.role === 1"
           >
             <v-list-item-content>
-              <v-list-item-title><v-icon color="blue-grey darken-1">mdi-circle-medium</v-icon> {{ user.fullname }}</v-list-item-title>
+              <v-list-item-title><v-icon color="#4CAF50">mdi-av-timer</v-icon> <strong class="overline">Time Tracker</strong> </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </template>
-        <template v-else>
+
+          <v-list-item
+            link
+            dark
+            to="/admins"
+            exact
+            exact-active-class="activeEx"
+            v-if="isUserLoggedIn.role === 0"
+          >
             <v-list-item-content>
-              <v-list-item-title class="pl-4 white--text">No Users Offline</v-list-item-title>
+              <v-list-item-title><v-icon color="#4CAF50">mdi-account-group</v-icon>&nbsp;<strong class="overline">Admin List</strong> </v-list-item-title>
             </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item
+            link
+            dark
+            to="/students"
+            exact
+            exact-active-class="activeEx"
+            v-if="isUserLoggedIn.role === 0"
+          >
+            <v-list-item-content>
+              <v-list-item-title><v-icon color="#4CAF50">mdi-account-group-outline</v-icon>&nbsp;<strong class="overline">Student List</strong> </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -78,11 +94,19 @@
     </v-app-bar>
 
     <v-main>
-        <router-view :online_indicator="online_indicator" :chat_user="getChatUser"></router-view>
+        <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
+<style>
+
+.activeEx {
+    color: #4CAF50 !important;
+    font-weight: bold !important;
+}
+
+</style>
 <script>
   export default {
     name: 'Template',
@@ -99,43 +123,24 @@
       getChatUser:""
     }),
     computed: {
-      online_users() {
-        return this.$store.getters.getOnlineUsers;
-      },
-      offline_users() {
-        return this.$store.getters.getOfflineUsers;
-      },
-
       isUserLoggedIn() {
           return this.$store.getters.getUser;
-      },
-
-      chat_user() {
-        return this.$store.getters.getChatUser;
       },
     },
     watch: {
         isUserLoggedIn : function (v) {
           if(v) {
-            this.$store.dispatch('fetchOnlineUsers');
-            this.$store.dispatch('fetchOfflineUsers');
-            this.$store.dispatch('fetchUser', window.location.href.split('/').pop());            
+            this.$store.dispatch('fetchUser', window.location.href.split('/').pop());         
           }
-        },
-        chat_user: function (data){
-          this.getChatUser = data;
         }
     },
     mounted() {
     },
     methods: {
         logout(){
-            axios.post('logout')
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-            });
+          localStorage.removeItem("token_");
+          this.$store.commit("setUser", false);
+          this.$router.push({ path: '/' });
         }
     }
   }

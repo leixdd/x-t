@@ -28,7 +28,9 @@
     },
     "dependencies": {
         "laravel-echo": "^1.10.0",
+        "moment": "^2.29.1",
         "pusher-js": "^7.0.3",
+        "sweetalert2": "^10.16.6",
         "vform": "^1.0.1",
         "vue-emoji-picker": "^1.0.1",
         "vue-router": "^3.5.1",

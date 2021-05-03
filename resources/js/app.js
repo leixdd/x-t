@@ -14,6 +14,9 @@ import router from './routes'
 import components from './components'
 import store from './store'
 import { EmojiPickerPlugin } from 'vue-emoji-picker'
+import Swal from 'sweetalert2';
+
+window.Swal = Swal;
 
 Vue.use(EmojiPickerPlugin)
 /**

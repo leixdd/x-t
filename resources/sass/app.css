@@ -4,7 +4,7 @@ html {
 }
 
 /*Login */
-.login-page {
+/* .login-page {
   height: 100vh;
   overflow: hidden !important;
   background-image: url("/images/Human-Resources.jpg");
@@ -12,7 +12,7 @@ html {
   background-size: cover;
   width: 100%;
   overflow: hidden !important;
-}
+} */
 
 * {
   margin: 0;
