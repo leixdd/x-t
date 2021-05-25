@@ -149,11 +149,15 @@ class AccountController extends Controller
     }
 
     public function getAdmins(){
-        return User::where('role', 0)->get()->toArray();
+        return User::where('role', 0)->where('status',1 )->get()->toArray();
     }
 
     public function getStudents(){
-        return User::with('info')->where('role', 1)->get()->toArray();
+        return User::with('info')->where('role', 1)->where('status',1 )->get()->toArray();
+    }
+
+    public function getArchivedStudents() {
+        return User::with('info')->where('role', 1)->where('status', 0)->get()->toArray();
     }
 
     public function createNewStudent(Request $request)
@@ -310,7 +314,8 @@ class AccountController extends Controller
         DB::beginTransaction();
         try{
             $user = User::where('id', $id)->first();
-            $user->delete();
+            $user->status = 0;
+            $user->save();
 
         }catch(\Throwable $ex) {
             Log::critical($ex);
@@ -325,7 +330,7 @@ class AccountController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $user->username . ' was successfully deleted'
+            'message' => $user->username . ' was successfully archived'
         ]);
     }
 }

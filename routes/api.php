@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('edit-student', [App\Http\Controllers\AccountController::class, 'editStudent']);
     Route::post('delete-student/{id}', [App\Http\Controllers\AccountController::class, 'deleteStudent']);
     Route::get('getStudents', [App\Http\Controllers\AccountController::class, 'getStudents']);
+    Route::get('getArchivedStudents', [App\Http\Controllers\AccountController::class, 'getArchivedStudents']);
     Route::get('tasks/{id}', [App\Http\Controllers\TaskController::class, 'getTasks']);
     Route::get('time_logs/{id}', [App\Http\Controllers\TaskController::class, 'getTimeLogs']);
     Route::post('delete-task/{id}', [App\Http\Controllers\TaskController::class, 'deleteTask']);

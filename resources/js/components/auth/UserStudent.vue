@@ -4,6 +4,7 @@
       <v-col cols="12">
         <h1 class="grey--text darken-4">User Student List</h1>
         <v-btn color="green accent-4" dark small @click="dialog_add_user = true">Add Student User</v-btn>
+        <v-btn color="red accent-4" dark small @click="viewArch">View Archived Students</v-btn>
         <v-divider class="mt-4"></v-divider>
         <v-data-table
           :headers="headers"
@@ -292,10 +293,9 @@
                 
                 <v-col cols="12" md="6">
                   <v-card>
-                    <v-card-title >Time Logs</v-card-title>
+                    <v-card-title >Total accumulated time: {{ total_time }} hours</v-card-title>
                     <v-divider />
                     <v-card-text>
-                      
                     <v-data-table :headers="table_headers_timelogs" :items="target_user_time_logs" :loading="target_user_time_logs_loading">
                         <template v-slot:item.status_stamp="{ item, index }">
                           {{ getStatusTL(item.status_stamp) }}
@@ -311,7 +311,26 @@
            <v-card-actions class="d-flex justify-between">
             <v-spacer />
             <div>
-              <v-btn @click="dialog_view_user = false" color="grey" dark>Cancel</v-btn>
+              <v-btn @click="dialog_view_user = false" color="grey" dark>Close</v-btn>
+            </div>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog persistent v-model="dialog_arch_students" width="1000">
+        <v-card>
+          <v-card-title >View Archived Students</v-card-title>
+          <v-card-text>
+            <v-data-table :headers="headers_f" :items="students_arch" :loading="students_arch_load">
+                <template v-slot:item.status_stamp="{ item, index }">
+                  {{ getStatusTL(item.status_stamp) }}
+                </template>
+            </v-data-table>
+          </v-card-text>
+           <v-card-actions class="d-flex justify-between">
+            <v-spacer />
+            <div>
+              <v-btn @click="dialog_arch_students = false" color="grey" dark>Close</v-btn>
             </div>
           </v-card-actions>
         </v-card>
@@ -353,6 +372,8 @@
   </v-app>
 </template>
 <script>
+
+import moment from 'moment';
 import Vue from 'vue'
 import { Form, HasError, AlertError } from 'vform'
 
@@ -393,6 +414,12 @@ export default {
       { text: 'User Name', value: 'username' },
       { text: 'E-mail', value: 'email' },
       { text: 'Actions', value: 'actions' },
+    ],
+
+    headers_f: [
+      { text: 'Full Name', value: 'fullname' },
+      { text: 'User Name', value: 'username' },
+      { text: 'E-mail', value: 'email' },
     ],
 
     target_user_edit: new Form({
@@ -438,6 +465,12 @@ export default {
     ],
     target_user_time_logs_loading: false,
 
+    total_time: 0,
+    
+    students_arch: [],
+    dialog_arch_students: false,
+    students_arch_load: false
+
   }),
 
   mounted() {
@@ -480,11 +513,35 @@ export default {
       .finally( () => this.target_user_time_logs_loading = false);
     },
 
+    viewArch()
+    {
+      this.dialog_arch_students = true;
+      this.getStudentsArch();
+    },
+
+    async getStudentsArch()
+    {
+      this.students_arch_load = true;
+      await axios.get('/api/students/getArchivedStudents').catch(err => console.log(err)).then(data => {
+        this.students_arch = data.data;
+      }).finally(f => {
+        this.students_arch_load = false;
+      })
+    },
+
     async getTimeLogs(id) {
       this.target_user_tasks_loading = true;
       await axios.get(`/api/students/time_logs/${ id }`)
       .catch(err => console.log(err))
-      .then(response => this.target_user_time_logs = response.data)
+      .then(response => {
+        
+        this.target_user_time_logs = response.data
+
+        let f = this.target_user_time_logs[this.target_user_time_logs.length - 1];
+        let last_out = f.status_stamp == 2 ? f :  this.target_user_time_logs[this.target_user_time_logs.length - 2];
+        this.total_time = ( ((moment(last_out.created_at).diff(moment(this.target_user_time_logs[0].created_at), 'seconds')) / 60) / 60).toFixed(2);
+
+      })
       .finally( () => this.target_user_tasks_loading = false);
     },
 
