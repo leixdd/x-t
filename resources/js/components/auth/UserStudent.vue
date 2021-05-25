@@ -15,7 +15,7 @@
           <template v-slot:item.actions="{ item, index }">
             <v-btn color="primary white--text" x-small @click="viewUser(item, index)">View</v-btn>
             <v-btn color="green white--text" x-small @click="editUser(item, index)">Edit</v-btn>
-            <v-btn color="red white--text" x-small @click="deleteUser(item.id)">Delete</v-btn>
+            <v-btn color="red white--text" x-small @click="deleteUser(item.id)">Archive</v-btn>
           </template>
 
         </v-data-table>
@@ -321,10 +321,9 @@
         <v-card>
           <v-card-title >View Archived Students</v-card-title>
           <v-card-text>
-            <v-data-table :headers="headers_f" :items="students_arch" :loading="students_arch_load">
-                <template v-slot:item.status_stamp="{ item, index }">
-                  {{ getStatusTL(item.status_stamp) }}
-                </template>
+            <v-data-table :headers="headers_f" :items="students_arch" :loading="students_arch_load" 
+            :items-per-page="10"
+            class="elevation-1">
             </v-data-table>
           </v-card-text>
            <v-card-actions class="d-flex justify-between">
@@ -420,6 +419,7 @@ export default {
       { text: 'Full Name', value: 'fullname' },
       { text: 'User Name', value: 'username' },
       { text: 'E-mail', value: 'email' },
+      { text: 'Archived Date', value: 'updated_at' },
     ],
 
     target_user_edit: new Form({
